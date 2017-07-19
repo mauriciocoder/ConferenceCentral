@@ -1,6 +1,6 @@
 {
  "kind": "discovery#rpcDescription",
- "etag": "\"RnkXbyw9us4_w3H-FU6An0C4oYs/AiJjP1WQji3SB58OUswStRrJpXM\"",
+ "etag": "\"RnkXbyw9us4_w3H-FU6An0C4oYs/gzmFBgaSpbFQxAQvCuOat2vBgZ0\"",
  "discoveryVersion": "v1",
  "id": "conference:v1",
  "name": "conference",
@@ -165,10 +165,79 @@
     }
    }
   },
+  "ConferenceQueryForm": {
+   "id": "ConferenceQueryForm",
+   "type": "object",
+   "properties": {
+    "filters": {
+     "type": "array",
+     "items": {
+      "$ref": "Filter"
+     }
+    }
+   }
+  },
+  "Field": {
+   "id": "Field",
+   "type": "string",
+   "enum": [
+    "CITY",
+    "MAX_ATTENDEES",
+    "MONTH",
+    "TOPIC"
+   ],
+   "enumDescriptions": [
+    "",
+    "",
+    "",
+    ""
+   ]
+  },
+  "Filter": {
+   "id": "Filter",
+   "type": "object",
+   "properties": {
+    "field": {
+     "$ref": "Field"
+    },
+    "operator": {
+     "$ref": "Operator"
+    },
+    "value": {
+     "type": "string"
+    }
+   }
+  },
+  "Operator": {
+   "id": "Operator",
+   "type": "string",
+   "enum": [
+    "EQ",
+    "GT",
+    "GTEQ",
+    "LT",
+    "LTEQ",
+    "NE"
+   ],
+   "enumDescriptions": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+   ]
+  },
   "Profile": {
    "id": "Profile",
    "type": "object",
    "properties": {
+    "conferenceKeysToAttend": {
+     "type": "array",
+     "items": {
+      "type": "string"
+     }
+    },
     "displayName": {
      "type": "string"
     },
@@ -218,6 +287,18 @@
     "",
     ""
    ]
+  },
+  "WrappedBoolean": {
+   "id": "WrappedBoolean",
+   "type": "object",
+   "properties": {
+    "reason": {
+     "type": "string"
+    },
+    "result": {
+     "type": "boolean"
+    }
+   }
   }
  },
  "methods": {
@@ -238,6 +319,35 @@
     "https://www.googleapis.com/auth/userinfo.email"
    ]
   },
+  "conference.getConference": {
+   "id": "conference.getConference",
+   "allowGet": true,
+   "parameters": {
+    "websafeConferenceKey": {
+     "type": "string",
+     "required": true
+    }
+   },
+   "parameterOrder": [
+    "websafeConferenceKey"
+   ],
+   "returns": {
+    "$ref": "Conference"
+   },
+   "scopes": [
+    "https://www.googleapis.com/auth/userinfo.email"
+   ]
+  },
+  "conference.getConferencesToAttend": {
+   "id": "conference.getConferencesToAttend",
+   "allowGet": true,
+   "returns": {
+    "$ref": "ConferenceCollection"
+   },
+   "scopes": [
+    "https://www.googleapis.com/auth/userinfo.email"
+   ]
+  },
   "conference.getProfile": {
    "id": "conference.getProfile",
    "allowGet": true,
@@ -250,6 +360,14 @@
   },
   "conference.queryConferences": {
    "id": "conference.queryConferences",
+   "parameters": {
+    "resource": {
+     "$ref": "ConferenceQueryForm"
+    }
+   },
+   "parameterOrder": [
+    "resource"
+   ],
    "returns": {
     "$ref": "ConferenceCollection"
    },
@@ -275,6 +393,51 @@
     "https://www.googleapis.com/auth/userinfo.email"
    ]
   },
+  "conference.queryConferencesPlayground": {
+   "id": "conference.queryConferencesPlayground",
+   "returns": {
+    "$ref": "ConferenceCollection"
+   },
+   "scopes": [
+    "https://www.googleapis.com/auth/userinfo.email"
+   ]
+  },
+  "conference.queryConferencesPlayground2": {
+   "id": "conference.queryConferencesPlayground2",
+   "returns": {
+    "$ref": "ConferenceCollection"
+   },
+   "scopes": [
+    "https://www.googleapis.com/auth/userinfo.email"
+   ]
+  },
+  "conference.queryConferencesPlayground3": {
+   "id": "conference.queryConferencesPlayground3",
+   "returns": {
+    "$ref": "ConferenceCollection"
+   },
+   "scopes": [
+    "https://www.googleapis.com/auth/userinfo.email"
+   ]
+  },
+  "conference.registerForConference": {
+   "id": "conference.registerForConference",
+   "parameters": {
+    "websafeConferenceKey": {
+     "type": "string",
+     "required": true
+    }
+   },
+   "parameterOrder": [
+    "websafeConferenceKey"
+   ],
+   "returns": {
+    "$ref": "WrappedBoolean"
+   },
+   "scopes": [
+    "https://www.googleapis.com/auth/userinfo.email"
+   ]
+  },
   "conference.saveProfile": {
    "id": "conference.saveProfile",
    "parameters": {
@@ -287,6 +450,24 @@
    ],
    "returns": {
     "$ref": "Profile"
+   },
+   "scopes": [
+    "https://www.googleapis.com/auth/userinfo.email"
+   ]
+  },
+  "conference.unregisterFromConference": {
+   "id": "conference.unregisterFromConference",
+   "parameters": {
+    "websafeConferenceKey": {
+     "type": "string",
+     "required": true
+    }
+   },
+   "parameterOrder": [
+    "websafeConferenceKey"
+   ],
+   "returns": {
+    "$ref": "WrappedBoolean"
    },
    "scopes": [
     "https://www.googleapis.com/auth/userinfo.email"

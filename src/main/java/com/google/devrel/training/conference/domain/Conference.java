@@ -273,4 +273,5 @@ public class Conference {
     public void save() {
         ofy().save().entity(this).now();
     }
+
 }

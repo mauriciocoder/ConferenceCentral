@@ -1,0 +1,14 @@
+<datastore-indexes autoGenerate="false">
+    <datastore-index kind="Conference" ancestor="false">
+        <property name="city" direction="asc"/>
+        <property name="month" direction="asc"/>
+        <property name="name" direction="asc"/>
+        <property name="topics" direction="asc"/>
+    </datastore-index>
+    <datastore-index kind="Conference" ancestor="false">
+        <property name="city" direction="asc"/>
+        <property name="month" direction="asc"/>
+        <property name="name" direction="asc"/>
+        <property name="maxAttendees" direction="asc"/>
+    </datastore-index>
+</datastore-indexes>

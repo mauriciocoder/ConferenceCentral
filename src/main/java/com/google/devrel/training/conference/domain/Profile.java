@@ -5,8 +5,10 @@ import com.google.devrel.training.conference.form.ProfileForm.TeeShirtSize;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 
-import static com.google.devrel.training.conference.service.OfyService.ofy;
+import java.util.ArrayList;
+import java.util.List;
 
+import static com.google.devrel.training.conference.service.OfyService.ofy;
 
 // TODO indicate that this class is an Entity
 @Entity
@@ -14,6 +16,8 @@ public class Profile {
 	String displayName;
 	String mainEmail;
 	TeeShirtSize teeShirtSize;
+
+	private List<String> conferenceKeysToAttend;
 
 	// TODO indicate that the userId is to be used in the Entity's key
 	@Id
@@ -66,6 +70,21 @@ public class Profile {
     		this.displayName = displayName;
     		this.teeShirtSize = teeShirtSize;
     		save();
-			}
+		}
+	}
+
+	public List<String> getConferenceKeysToAttend() {
+		return conferenceKeysToAttend != null ? conferenceKeysToAttend : new ArrayList<String>();
+	}
+
+	public void addToConferenceKeysToAttend(String websafeConferenceKey) {
+    	if (conferenceKeysToAttend == null) {
+    		conferenceKeysToAttend = new ArrayList<>();
+		}
+		conferenceKeysToAttend.add(websafeConferenceKey);
+	}
+
+	public void removeConferenceToAttend(String websafeConferenceKey) {
+    	getConferenceKeysToAttend().remove(websafeConferenceKey);
 	}
 }
